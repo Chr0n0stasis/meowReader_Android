@@ -48,18 +48,39 @@ class ReadingFragment : Fragment() {
             MaterialTheme {
                 selectedQuestionForSheet?.let { question ->
                     val options = listOf(question.optionA, question.optionB, question.optionC, question.optionD)
-                    var selectedIndex by remember { mutableStateOf<Int?>(null) }
+                    var selectedIndex by remember(question.id) { mutableStateOf<Int?>(null) }
                     
                     com.meowreader.client.ui.components.QuizBottomSheet(
-                        questionStem = question.stem,
+                        questionStem = "${question.qNumber}. ${question.stem}",
                         options = options,
                         selectedIndex = selectedIndex,
                         onOptionSelected = { index ->
                             selectedIndex = index
                             handleAnswerSelection(question, index)
+                            
+                            // Auto-advance to next question after delay
+                            viewLifecycleOwner.lifecycleScope.launch {
+                                kotlinx.coroutines.delay(800)
+                                val allQuestions = viewModel.currentQuestions.first()
+                                val nextIndex = allQuestions.indexOf(question) + 1
+                                if (nextIndex < allQuestions.size) {
+                                    selectedQuestionForSheet = allQuestions[nextIndex]
+                                } else {
+                                    selectedQuestionForSheet = null // Done!
+                                }
+                            }
                         },
                         onDismiss = { selectedQuestionForSheet = null }
                     )
+                }
+            }
+        }
+
+        binding.quizFab.setOnClickListener {
+            viewLifecycleOwner.lifecycleScope.launch {
+                val questions = viewModel.currentQuestions.first()
+                if (questions.isNotEmpty()) {
+                    selectedQuestionForSheet = questions.first()
                 }
             }
         }
