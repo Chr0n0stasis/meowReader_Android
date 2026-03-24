@@ -83,9 +83,13 @@ class ReadingFragment : Fragment() {
                 
                 // MD3 Visual Feedback
                 if (isCorrect) {
-                    button.setIconResource(android.R.drawable.checkbox_on_background)
+                    button.setIconResource(R.drawable.ic_launcher) // Placeholder for check
+                    button.setIconTintResource(R.color.md_theme_light_primary)
+                    button.setTextColor(resources.getColor(R.color.md_theme_light_primary, null))
                 } else {
                     button.setIconResource(android.R.drawable.ic_delete)
+                    button.setIconTintResource(android.R.color.holo_red_dark)
+                    button.setTextColor(Color.RED)
                 }
 
                 // Show Explanation
