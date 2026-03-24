@@ -48,7 +48,7 @@ class ReadingFragment : Fragment() {
                     setupWordSelection(binding.articleBody)
                     
                     if (it.questionType == "Use of English") {
-                        setupClozeTabs(it.id)
+                        setupClozeTabs()
                     } else {
                         binding.clozeTabs.visibility = View.GONE
                     }
