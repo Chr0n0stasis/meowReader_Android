@@ -103,50 +103,6 @@ class ReadingFragment : Fragment() {
             }
         }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.currentQuestions.collectLatest { questions ->
-                binding.questionsContainer.removeAllViews()
-                questions.forEach { question ->
-                    addQuestionView(question)
-                }
-            }
-        }
-    }
-
-    private fun addQuestionView(question: QuestionEntity) {
-        val qBinding = ItemQuestionBinding.inflate(layoutInflater, binding.questionsContainer, false)
-        qBinding.questionStem.text = "${question.qNumber}. ${question.stem}"
-        qBinding.optionA.text = "A. ${question.optionA}"
-        qBinding.optionB.text = "B. ${question.optionB}"
-        qBinding.optionC.text = "C. ${question.optionC}"
-        qBinding.optionD.text = "D. ${question.optionD}"
-
-        val options = listOf(qBinding.optionA, qBinding.optionB, qBinding.optionC, qBinding.optionD)
-
-        options.forEach { button ->
-            button.setOnClickListener {
-                selectedQuestionForSheet = question
-            }
-        }
-
-        // Restore state if already answered
-        viewLifecycleOwner.lifecycleScope.launch {
-            val db = RoomDatabaseClient.getDatabase(requireContext())
-            db.answerDao().getAnswersForPaper(question.paperId).collectLatest { savedAnswers ->
-                val saved = savedAnswers.find { it.qNumber == question.qNumber }
-                saved?.let {
-                    val optionIndex = when(it.selectedAnswer) {
-                        "A" -> 0; "B" -> 1; "C" -> 2; "D" -> 3; else -> -1
-                    }
-                    if (optionIndex != -1) {
-                        showGradingIndicator(options[optionIndex], it.isCorrect)
-                    }
-                }
-            }
-        }
-
-        binding.questionsContainer.addView(qBinding.root)
-    }
 
     private fun handleAnswerSelection(question: QuestionEntity, index: Int) {
         val answers = listOf("A", "B", "C", "D")
@@ -167,15 +123,6 @@ class ReadingFragment : Fragment() {
         }
     }
 
-    private fun showGradingIndicator(button: com.google.android.material.button.MaterialButton, isCorrect: Boolean) {
-        if (isCorrect) {
-            button.setIconResource(R.drawable.ic_launcher)
-            button.setIconTintResource(R.color.md_theme_light_primary)
-        } else {
-            button.setIconResource(android.R.drawable.ic_delete)
-            button.setIconTintResource(android.R.color.holo_red_dark)
-        }
-    }
 
     private fun setupWordSelection(textView: android.widget.TextView) {
         textView.setTextIsSelectable(true)
@@ -215,21 +162,14 @@ class ReadingFragment : Fragment() {
         binding.clozeTabs.addOnTabSelectedListener(object : com.google.android.material.tabs.TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: com.google.android.material.tabs.TabLayout.Tab?) {
                 val qNum = tab?.text?.toString()?.toIntOrNull() ?: 1
-                scrollToQuestion(qNum)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val questions = viewModel.currentQuestions.first()
+                    selectedQuestionForSheet = questions.find { it.qNumber == qNum }
+                }
             }
             override fun onTabUnselected(tab: com.google.android.material.tabs.TabLayout.Tab?) {}
             override fun onTabReselected(tab: com.google.android.material.tabs.TabLayout.Tab?) {}
         })
-    }
-
-    private fun scrollToQuestion(qNumber: Int) {
-        for (i in 0 until binding.questionsContainer.childCount) {
-            val view = binding.questionsContainer.getChildAt(i)
-            if (i + 1 == qNumber) {
-                binding.scrollView.smoothScrollTo(0, view.top)
-                break
-            }
-        }
     }
 
     fun switchToPaper(paperId: String) {
