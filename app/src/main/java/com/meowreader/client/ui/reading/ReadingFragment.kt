@@ -11,6 +11,8 @@ import com.meowreader.client.data.database.AppDatabase
 import com.meowreader.client.databinding.FragmentReadingBinding
 import com.meowreader.client.databinding.ItemQuestionBinding
 import com.meowreader.client.domain.model.QuestionEntity
+import com.meowreader.client.R
+import android.graphics.Color
 import io.noties.markwon.Markwon
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
