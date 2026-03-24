@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
+        binding.toolbar.setLogo(R.drawable.ic_launcher) // Cat paw/book placeholder
         
         binding.toolbar.setNavigationOnClickListener {
             binding.drawerLayout.openDrawer(GravityCompat.START)
@@ -102,13 +103,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateSidebarHighlight(papers: List<com.meowreader.client.domain.model.PaperEntity>, activeId: String? = null) {
-        val menu = binding.navView.menu
-        for (i in 0 until menu.size()) {
-            val item = menu.getItem(i)
-            item.isChecked = papers[i].id == activeId
-        }
-    }
 
     private fun switchFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
