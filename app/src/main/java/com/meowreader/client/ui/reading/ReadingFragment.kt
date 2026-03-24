@@ -118,7 +118,7 @@ class ReadingFragment : Fragment() {
                         "A" -> 0; "B" -> 1; "C" -> 2; "D" -> 3; else -> -1
                     }
                     if (optionIndex != -1) {
-                        showGradingIndicator(qBinding, options[optionIndex], it.isCorrect)
+                        showGradingIndicator(options[optionIndex], it.isCorrect)
                     }
                 }
             }
@@ -146,7 +146,7 @@ class ReadingFragment : Fragment() {
         }
     }
 
-    private fun showGradingIndicator(qBinding: ItemQuestionBinding, button: com.google.android.material.button.MaterialButton, isCorrect: Boolean) {
+    private fun showGradingIndicator(button: com.google.android.material.button.MaterialButton, isCorrect: Boolean) {
         if (isCorrect) {
             button.setIconResource(R.drawable.ic_launcher)
             button.setIconTintResource(R.color.md_theme_light_primary)
