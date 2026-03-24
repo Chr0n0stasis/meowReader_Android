@@ -4,7 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Url
 
 interface ApiService {
-    @GET("index.json")
+    @GET("artifacts/index.json")
     suspend fun getIndex(): List<IndexResponse>
 
     @GET

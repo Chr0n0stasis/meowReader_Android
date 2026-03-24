@@ -4,7 +4,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitClient {
-    private const val BASE_URL = "https://raw.githubusercontent.com/chr0n0s/meowReader/main/artifacts/" // Example URL
+    private const val BASE_URL = "https://raw.githubusercontent.com/Chr0n0stasis/meowReader_server/main/"
 
     private val retrofit = Retrofit.Builder()
         .baseUrl(BASE_URL)
