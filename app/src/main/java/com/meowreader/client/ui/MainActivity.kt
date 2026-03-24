@@ -69,6 +69,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private val readingViewModel: com.meowreader.client.ui.reading.ReadingViewModel by androidx.fragment.app.activityViewModels {
+        val db = com.meowreader.client.ui.reading.RoomDatabaseClient.getDatabase(this)
+        com.meowreader.client.ui.reading.ReadingViewModelFactory(db.paperDao())
+    }
+
     private fun setupNavigationDrawer() {
         val db = RoomDatabaseClient.getDatabase(this)
         lifecycleScope.launch {
@@ -78,27 +83,39 @@ class MainActivity : AppCompatActivity() {
                 papers.forEachIndexed { index, paper ->
                     val item = menu.add(Menu.NONE, index, Menu.NONE, paper.title)
                     item.setIcon(R.drawable.ic_launcher)
+                    item.isCheckable = true
                 }
+
+                // Initial Highlight
+                updateSidebarHighlight(papers)
 
                 binding.navView.setNavigationItemSelectedListener { menuItem ->
                     val paper = papers[menuItem.itemId]
-                    // Tell ReadingFragment to switch
-                    val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
-                    if (currentFragment is ReadingFragment) {
-                        currentFragment.switchToPaper(paper.id)
-                    } else {
-                        // Switch to Reading tab first then load paper
+                    readingViewModel.setPaper(paper.id)
+                    
+                    if (supportFragmentManager.findFragmentById(R.id.fragment_container) !is ReadingFragment) {
                         binding.bottomNavigation.selectedItemId = R.id.nav_reading
-                        // Need a small delay or use shared ViewModel
-                        lifecycleScope.launch {
-                            kotlinx.coroutines.delay(100)
-                            (supportFragmentManager.findFragmentById(R.id.fragment_container) as? ReadingFragment)?.switchToPaper(paper.id)
-                        }
                     }
+                    
                     binding.drawerLayout.closeDrawer(GravityCompat.START)
                     true
                 }
+
+                // Sync Highlight with VM
+                launch {
+                    readingViewModel.currentPaper.collectLatest { paper ->
+                        updateSidebarHighlight(papers, paper?.id)
+                    }
+                }
             }
+        }
+    }
+
+    private fun updateSidebarHighlight(papers: List<com.meowreader.client.domain.model.PaperEntity>, activeId: String? = null) {
+        val menu = binding.navView.menu
+        for (i in 0 until menu.size()) {
+            val item = menu.getItem(i)
+            item.isChecked = papers[i].id == activeId
         }
     }
 

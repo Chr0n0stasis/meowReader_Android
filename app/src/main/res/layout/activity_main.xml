@@ -10,6 +10,8 @@
         android:layout_width="320dp"
         android:layout_height="match_parent"
         android:layout_gravity="start"
+        app:itemTextColor="@color/nav_item_text_color"
+        app:itemBackground="@color/nav_item_background_color"
         app:headerLayout="@layout/nav_header" />
 
     <RelativeLayout

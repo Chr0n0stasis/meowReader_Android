@@ -23,7 +23,7 @@ class ReadingFragment : Fragment() {
     private var _binding: FragmentReadingBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ReadingViewModel by viewModels {
+    private val viewModel: ReadingViewModel by androidx.fragment.app.activityViewModels {
         val db = RoomDatabaseClient.getDatabase(requireContext())
         ReadingViewModelFactory(db.paperDao())
     }
@@ -192,8 +192,8 @@ class ReadingFragment : Fragment() {
     private fun setupClozeTabs() {
         binding.clozeTabs.visibility = View.VISIBLE
         binding.clozeTabs.removeAllTabs()
-        // Example: showing tabs for questions 1, 2, 3 as per requirements
-        for (i in 1..3) {
+        // Standard Cloze (Use of English) has 20 blanks/questions
+        for (i in 1..20) {
             binding.clozeTabs.addTab(binding.clozeTabs.newTab().setText("$i"))
         }
 
