@@ -39,19 +39,22 @@ class ArticleNavAdapter(
     inner class ViewHolder(private val binding: ItemNavArticleBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(paper: PaperEntity, isSelected: Boolean) {
             binding.articleTitle.text = paper.title
+            binding.root.isActivated = isSelected
             
             val context = binding.root.context
             val typedValue = android.util.TypedValue()
             
             if (isSelected) {
-                binding.activeIndicator.visibility = View.VISIBLE
-                context.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
-                binding.articleTitle.setTextColor(typedValue.data)
+                context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnSecondaryContainer, typedValue, true)
+                val color = typedValue.data
+                binding.articleTitle.setTextColor(color)
+                binding.articleIcon.setColorFilter(color)
                 binding.articleTitle.setTypeface(null, android.graphics.Typeface.BOLD)
             } else {
-                binding.activeIndicator.visibility = View.INVISIBLE
                 context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurfaceVariant, typedValue, true)
-                binding.articleTitle.setTextColor(typedValue.data)
+                val color = typedValue.data
+                binding.articleTitle.setTextColor(color)
+                binding.articleIcon.setColorFilter(color)
                 binding.articleTitle.setTypeface(null, android.graphics.Typeface.NORMAL)
             }
 

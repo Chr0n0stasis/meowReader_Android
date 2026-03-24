@@ -1,31 +1,36 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_item_root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal"
+    android:layout_height="56dp"
+    android:layout_marginStart="12dp"
+    android:layout_marginEnd="12dp"
+    android:layout_marginTop="2dp"
+    android:layout_marginBottom="2dp"
+    android:background="@drawable/nav_item_pill_bg"
+    android:clickable="true"
+    android:focusable="true"
     android:gravity="center_vertical"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp"
-    android:background="?attr/selectableItemBackground">
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp">
 
-    <View
-        android:id="@+id/active_indicator"
-        android:layout_width="4dp"
+    <ImageView
+        android:id="@+id/article_icon"
+        android:layout_width="24dp"
         android:layout_height="24dp"
-        android:background="?attr/colorPrimary"
-        android:visibility="invisible" />
+        android:src="@drawable/ic_launcher"
+        app:tint="?attr/colorOnSurfaceVariant" />
 
     <TextView
         android:id="@+id/article_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
         android:layout_marginStart="12dp"
-        android:layout_marginEnd="16dp"
+        android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="1"
-        android:textAppearance="?attr/textAppearanceBodyLarge"
+        android:textAppearance="?attr/textAppearanceLabelLarge"
         android:textColor="?attr/colorOnSurfaceVariant" />
 
 </LinearLayout>

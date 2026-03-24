@@ -5,35 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="320dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/md_theme_light_surfaceContainerLow"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="24dp"
-            android:text="目录"
-            android:textAppearance="?attr/textAppearanceTitleMedium" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/nav_recycler"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:paddingStart="0dp"
-            android:paddingEnd="8dp" />
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:background="?attr/colorOutlineVariant" />
-    </LinearLayout>
-
+    <!-- Main Content -->
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -60,5 +32,87 @@
             android:layout_alignParentBottom="true"
             app:menu="@menu/bottom_nav_menu" />
     </RelativeLayout>
+
+    <!-- Side Sheet (Drawer) -->
+    <LinearLayout
+        android:id="@+id/drawer_contents"
+        android:layout_width="320dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:background="?attr/colorSurfaceContainerLow"
+        android:orientation="vertical"
+        android:paddingTop="12dp">
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_margin="12dp"
+            app:cardBackgroundColor="?attr/colorSurface"
+            app:cardCornerRadius="28dp"
+            app:strokeWidth="1dp"
+            app:strokeColor="?attr/colorOutlineVariant">
+            
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:orientation="horizontal">
+                <ImageView 
+                    android:layout_width="24dp" 
+                    android:layout_height="24dp" 
+                    android:src="@drawable/ic_launcher" 
+                    app:tint="?attr/colorOnSurfaceVariant" />
+                <TextView 
+                    android:layout_width="wrap_content" 
+                    android:layout_height="wrap_content" 
+                    android:text="搜索对话" 
+                    android:layout_marginStart="12dp" 
+                    android:textColor="?attr/colorOnSurfaceVariant" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:gravity="center_vertical"
+            android:paddingStart="16dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+            <ImageView 
+                android:layout_width="24dp" 
+                android:layout_height="24dp" 
+                android:src="@drawable/ic_launcher" 
+                app:tint="?attr/colorOnSurfaceVariant" />
+            <TextView 
+                android:layout_width="wrap_content" 
+                android:layout_height="wrap_content" 
+                android:text="发起新对话" 
+                android:layout_marginStart="12dp" 
+                android:textAppearance="?attr/textAppearanceLabelLarge" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="28dp"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"
+            android:text="对话"
+            android:textAppearance="?attr/textAppearanceLabelMedium"
+            android:textColor="?attr/colorPrimary" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/nav_recycler"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:paddingStart="0dp"
+            android:paddingEnd="0dp" />
+
+    </LinearLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>
