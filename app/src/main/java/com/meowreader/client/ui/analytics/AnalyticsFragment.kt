@@ -22,6 +22,7 @@ class AnalyticsFragment : Fragment() {
         val db = RoomDatabaseClient.getDatabase(requireContext())
         object : androidx.lifecycle.ViewModelProvider.Factory {
             override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
+                @Suppress("UNCHECKED_CAST")
                 return AnalyticsViewModel(db.historyDao()) as T
             }
         }
