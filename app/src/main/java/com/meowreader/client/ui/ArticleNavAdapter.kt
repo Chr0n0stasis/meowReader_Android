@@ -40,13 +40,18 @@ class ArticleNavAdapter(
         fun bind(paper: PaperEntity, isSelected: Boolean) {
             binding.articleTitle.text = paper.title
             
+            val context = binding.root.context
+            val typedValue = android.util.TypedValue()
+            
             if (isSelected) {
                 binding.activeIndicator.visibility = View.VISIBLE
-                binding.articleTitle.setTextColor(binding.root.context.getColor(com.google.android.material.R.color.material_dynamic_primary50))
+                context.theme.resolveAttribute(com.google.android.material.R.attr.colorPrimary, typedValue, true)
+                binding.articleTitle.setTextColor(typedValue.data)
                 binding.articleTitle.setTypeface(null, android.graphics.Typeface.BOLD)
             } else {
                 binding.activeIndicator.visibility = View.INVISIBLE
-                binding.articleTitle.setTextColor(binding.root.context.getColor(com.google.android.material.R.color.material_dynamic_neutral_variant50))
+                context.theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurfaceVariant, typedValue, true)
+                binding.articleTitle.setTextColor(typedValue.data)
                 binding.articleTitle.setTypeface(null, android.graphics.Typeface.NORMAL)
             }
 

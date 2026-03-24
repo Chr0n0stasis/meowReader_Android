@@ -17,6 +17,10 @@ import io.noties.markwon.Markwon
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.*
+import androidx.compose.material3.*
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.Modifier
 
 class ReadingFragment : Fragment() {
 
@@ -36,8 +40,30 @@ class ReadingFragment : Fragment() {
         return binding.root
     }
 
+    private var selectedQuestionForSheet by mutableStateOf<QuestionEntity?>(null)
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.composeView.setContent {
+            MaterialTheme {
+                selectedQuestionForSheet?.let { question ->
+                    val options = listOf(question.optionA, question.optionB, question.optionC, question.optionD)
+                    var selectedIndex by remember { mutableStateOf<Int?>(null) }
+                    
+                    com.meowreader.client.ui.components.QuizBottomSheet(
+                        questionStem = question.stem,
+                        options = options,
+                        selectedIndex = selectedIndex,
+                        onOptionSelected = { index ->
+                            selectedIndex = index
+                            handleAnswerSelection(question, index)
+                        },
+                        onDismiss = { selectedQuestionForSheet = null }
+                    )
+                }
+            }
+        }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.currentPaper.collectLatest { paper ->
