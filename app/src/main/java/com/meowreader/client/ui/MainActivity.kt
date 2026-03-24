@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        binding.bottomNavigation.setOnItemSelectedListener { item ->
+        (binding.bottomNavigation as com.google.android.material.bottomnavigation.BottomNavigationView).setOnItemSelectedListener { item ->
             when(item.itemId) {
                 R.id.nav_reading -> switchFragment(ReadingFragment())
                 R.id.nav_analytics -> switchFragment(AnalyticsFragment())
