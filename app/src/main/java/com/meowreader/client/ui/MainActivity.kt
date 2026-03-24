@@ -14,6 +14,7 @@ import com.meowreader.client.ui.analytics.AnalyticsFragment
 import com.meowreader.client.ui.reading.ReadingFragment
 import com.meowreader.client.ui.reading.RoomDatabaseClient
 import com.meowreader.client.ui.settings.SettingsFragment
+import com.google.android.material.navigation.BottomNavigationView
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
