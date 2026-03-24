@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val readingViewModel: com.meowreader.client.ui.reading.ReadingViewModel by androidx.fragment.app.activityViewModels {
+    private val readingViewModel: com.meowreader.client.ui.reading.ReadingViewModel by androidx.activity.viewModels {
         val db = com.meowreader.client.ui.reading.RoomDatabaseClient.getDatabase(this)
         com.meowreader.client.ui.reading.ReadingViewModelFactory(db.paperDao())
     }
