@@ -21,7 +21,7 @@ class AnalyticsViewModel(private val historyDao: HistoryDao) : ViewModel() {
         history.filter { it.isCompleted && it.completionDate > oneWeekAgo }
             .sortedByDescending { it.rating }
             .take(15)
-            .sum()
+            .sumOf { it.rating }
     }
 
     val totalRating: Flow<Double> = combine(b35Rating, b15RatingWeekly) { b35, b15 ->

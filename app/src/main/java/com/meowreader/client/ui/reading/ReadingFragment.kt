@@ -15,6 +15,7 @@ import com.meowreader.client.R
 import android.graphics.Color
 import io.noties.markwon.Markwon
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 class ReadingFragment : Fragment() {
