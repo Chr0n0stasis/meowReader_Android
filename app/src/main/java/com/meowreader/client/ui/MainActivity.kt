@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.delay
 import android.view.Menu
+import androidx.activity.viewModels
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -69,7 +70,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private val readingViewModel: com.meowreader.client.ui.reading.ReadingViewModel by androidx.activity.viewModels {
+    private val readingViewModel: com.meowreader.client.ui.reading.ReadingViewModel by viewModels {
         val db = com.meowreader.client.ui.reading.RoomDatabaseClient.getDatabase(this)
         com.meowreader.client.ui.reading.ReadingViewModelFactory(db.paperDao())
     }

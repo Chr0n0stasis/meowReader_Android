@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.view.*
 import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.meowreader.client.data.database.AppDatabase
 import com.meowreader.client.databinding.FragmentReadingBinding
@@ -23,7 +23,7 @@ class ReadingFragment : Fragment() {
     private var _binding: FragmentReadingBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ReadingViewModel by androidx.fragment.app.activityViewModels {
+    private val viewModel: ReadingViewModel by activityViewModels {
         val db = RoomDatabaseClient.getDatabase(requireContext())
         ReadingViewModelFactory(db.paperDao())
     }
