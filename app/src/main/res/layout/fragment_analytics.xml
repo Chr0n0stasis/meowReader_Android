@@ -33,7 +33,7 @@
                     style="@style/TextAppearance.Material3.DisplayMedium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="?attr/onPrimaryContainer" />
+                    android:textColor="?attr/colorOnPrimaryContainer" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
