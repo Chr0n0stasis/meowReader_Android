@@ -25,28 +25,44 @@
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            app:cornerRadius="28dp"
+            app:icon="@drawable/ic_launcher"
+            app:iconPadding="12dp"
+            app:iconGravity="start" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/option_b"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            app:cornerRadius="28dp"
+            app:icon="@drawable/ic_launcher"
+            app:iconPadding="12dp"
+            app:iconGravity="start" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/option_c"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            app:cornerRadius="28dp"
+            app:icon="@drawable/ic_launcher"
+            app:iconPadding="12dp"
+            app:iconGravity="start" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/option_d"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAlignment="viewStart" />
+            android:textAlignment="viewStart"
+            app:cornerRadius="28dp"
+            app:icon="@drawable/ic_launcher"
+            app:iconPadding="12dp"
+            app:iconGravity="start" />
 
         <LinearLayout
             android:id="@+id/explanation_layout"

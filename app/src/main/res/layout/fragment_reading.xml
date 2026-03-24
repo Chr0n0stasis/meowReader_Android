@@ -41,16 +41,36 @@
             android:background="?android:attr/listDivider" />
 
         <LinearLayout
-            android:id="@+id/questions_container"
+            android:id="@+id/quiz_section"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
-            
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/cloze_tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+            android:layout_marginTop="32dp"
+            android:background="@color/md_theme_light_surfaceContainer"
+            android:elevation="4dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <View
+                android:layout_width="32dp"
+                android:layout_height="4dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="16dp"
+                android:background="?attr/colorOutline" />
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/cloze_tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:visibility="gone"
+                app:tabMode="scrollable" />
+
+            <LinearLayout
+                android:id="@+id/questions_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+        </LinearLayout>
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

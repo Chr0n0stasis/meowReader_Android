@@ -76,36 +76,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupNavigationDrawer() {
+        val adapter = ArticleNavAdapter { paper ->
+            readingViewModel.setPaper(paper.id)
+            if (supportFragmentManager.findFragmentById(R.id.fragment_container) !is ReadingFragment) {
+                binding.bottomNavigation.selectedItemId = R.id.nav_reading
+            }
+            binding.drawerLayout.closeDrawer(GravityCompat.START)
+        }
+        
+        binding.navRecycler.layoutManager = androidx.recyclerview.widget.LinearLayoutManager(this)
+        binding.navRecycler.adapter = adapter
+
         val db = RoomDatabaseClient.getDatabase(this)
         lifecycleScope.launch {
             db.paperDao().getAllPapers().collectLatest { papers ->
-                val menu = binding.navView.menu
-                menu.clear()
-                papers.forEachIndexed { index, paper ->
-                    val item = menu.add(Menu.NONE, index, Menu.NONE, paper.title)
-                    item.setIcon(R.drawable.ic_launcher)
-                    item.isCheckable = true
-                }
-
-                // Initial Highlight
-                updateSidebarHighlight(papers)
-
-                binding.navView.setNavigationItemSelectedListener { menuItem ->
-                    val paper = papers[menuItem.itemId]
-                    readingViewModel.setPaper(paper.id)
-                    
-                    if (supportFragmentManager.findFragmentById(R.id.fragment_container) !is ReadingFragment) {
-                        binding.bottomNavigation.selectedItemId = R.id.nav_reading
-                    }
-                    
-                    binding.drawerLayout.closeDrawer(GravityCompat.START)
-                    true
-                }
-
+                adapter.submitList(papers)
+                
                 // Sync Highlight with VM
                 launch {
                     readingViewModel.currentPaper.collectLatest { paper ->
-                        updateSidebarHighlight(papers, paper?.id)
+                        adapter.setSelectedId(paper?.id)
                     }
                 }
             }

@@ -25,6 +25,9 @@
     <color name="md_theme_light_surfaceVariant">#E7E0EC</color>
     <color name="md_theme_light_onSurfaceVariant">#49454F</color>
     <color name="md_theme_light_outline">#79747E</color>
+    <color name="md_theme_light_outlineVariant">#CAC4D0</color>
+    <color name="md_theme_light_surfaceContainerLow">#F7F2FA</color>
+    <color name="md_theme_light_surfaceContainer">#F3EDF7</color>
 
     <!-- MD3 Baseline Colors (Dark) -->
     <color name="md_theme_dark_primary">#D0BCFF</color>
@@ -44,4 +47,7 @@
     <color name="md_theme_dark_surfaceVariant">#49454F</color>
     <color name="md_theme_dark_onSurfaceVariant">#CAC4D0</color>
     <color name="md_theme_dark_outline">#938F99</color>
+    <color name="md_theme_dark_outlineVariant">#49454F</color>
+    <color name="md_theme_dark_surfaceContainerLow">#1D1B20</color>
+    <color name="md_theme_dark_surfaceContainer">#211F26</color>
 </resources>

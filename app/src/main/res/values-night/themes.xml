@@ -18,5 +18,8 @@
         <item name="colorSurfaceVariant">@color/md_theme_dark_surfaceVariant</item>
         <item name="colorOnSurfaceVariant">@color/md_theme_dark_onSurfaceVariant</item>
         <item name="colorOutline">@color/md_theme_dark_outline</item>
+        <item name="colorOutlineVariant">@color/md_theme_dark_outlineVariant</item>
+        <item name="attr/colorSurfaceContainerLow" tools:targetApi="33">@color/md_theme_dark_surfaceContainerLow</item>
+        <item name="attr/colorSurfaceContainer" tools:targetApi="33">@color/md_theme_dark_surfaceContainer</item>
     </style>
 </resources>
