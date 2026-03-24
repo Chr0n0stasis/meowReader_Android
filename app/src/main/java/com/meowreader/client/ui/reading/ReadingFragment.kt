@@ -134,7 +134,7 @@ class ReadingFragment : Fragment() {
         }
     }
 
-    private fun setupClozeTabs(paperId: String) {
+    private fun setupClozeTabs() {
         binding.clozeTabs.visibility = View.VISIBLE
         binding.clozeTabs.removeAllTabs()
         // Example: showing tabs for questions 1, 2, 3 as per requirements

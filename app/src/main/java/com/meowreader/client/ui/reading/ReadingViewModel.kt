@@ -4,9 +4,10 @@ import androidx.lifecycle.*
 import com.meowreader.client.data.database.PaperDao
 import com.meowreader.client.domain.model.PaperEntity
 import com.meowreader.client.domain.model.QuestionEntity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalCoroutinesApi::class)
 class ReadingViewModel(private val paperDao: PaperDao) : ViewModel() {
 
     private val _currentPaperId = MutableStateFlow<String?>(null)
