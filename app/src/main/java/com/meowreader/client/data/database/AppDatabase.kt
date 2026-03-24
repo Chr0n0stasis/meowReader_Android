@@ -21,8 +21,8 @@ interface PaperDao {
     @Query("SELECT * FROM papers ORDER BY groupUpdateDate DESC LIMIT 1")
     fun getLatestPaper(): Flow<PaperEntity?>
     
-    @Query("SELECT id FROM papers")
-    suspend fun getAllPaperIds(): List<String>
+    @Query("SELECT * FROM papers ORDER BY groupUpdateDate DESC")
+    fun getAllPapers(): Flow<List<PaperEntity>>
 }
 
 @Dao

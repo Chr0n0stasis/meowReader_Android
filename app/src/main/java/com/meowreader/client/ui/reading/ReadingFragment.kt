@@ -164,6 +164,10 @@ class ReadingFragment : Fragment() {
         }
     }
 
+    fun switchToPaper(paperId: String) {
+        viewModel.setPaper(paperId)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

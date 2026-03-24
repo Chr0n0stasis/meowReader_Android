@@ -16,6 +16,9 @@ import com.meowreader.client.ui.reading.RoomDatabaseClient
 import com.meowreader.client.ui.settings.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.delay
+import android.view.Menu
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -47,6 +50,8 @@ class MainActivity : AppCompatActivity() {
             switchFragment(ReadingFragment())
         }
 
+        setupNavigationDrawer()
+
         // Cold Start Sync
         lifecycleScope.launch {
             try {
@@ -56,6 +61,39 @@ class MainActivity : AppCompatActivity() {
                 repo.downloadPendingPapers()
             } catch (e: Exception) {
                 e.printStackTrace()
+            }
+        }
+    }
+
+    private fun setupNavigationDrawer() {
+        val db = RoomDatabaseClient.getDatabase(this)
+        lifecycleScope.launch {
+            db.paperDao().getAllPapers().collectLatest { papers ->
+                val menu = binding.navView.menu
+                menu.clear()
+                papers.forEachIndexed { index, paper ->
+                    val item = menu.add(Menu.NONE, index, Menu.NONE, paper.title)
+                    item.setIcon(R.drawable.ic_launcher)
+                }
+
+                binding.navView.setNavigationItemSelectedListener { menuItem ->
+                    val paper = papers[menuItem.itemId]
+                    // Tell ReadingFragment to switch
+                    val currentFragment = supportFragmentManager.findFragmentById(R.id.fragment_container)
+                    if (currentFragment is ReadingFragment) {
+                        currentFragment.switchToPaper(paper.id)
+                    } else {
+                        // Switch to Reading tab first then load paper
+                        binding.bottomNavigation.selectedItemId = R.id.nav_reading
+                        // Need a small delay or use shared ViewModel
+                        lifecycleScope.launch {
+                            kotlinx.coroutines.delay(100)
+                            (supportFragmentManager.findFragmentById(R.id.fragment_container) as? ReadingFragment)?.switchToPaper(paper.id)
+                        }
+                    }
+                    binding.drawerLayout.closeDrawer(GravityCompat.START)
+                    true
+                }
             }
         }
     }
