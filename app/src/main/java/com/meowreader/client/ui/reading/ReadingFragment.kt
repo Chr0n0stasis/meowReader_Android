@@ -102,7 +102,7 @@ class ReadingFragment : Fragment() {
                 }
             }
         }
-
+    }
 
     private fun handleAnswerSelection(question: QuestionEntity, index: Int) {
         val answers = listOf("A", "B", "C", "D")
@@ -122,7 +122,6 @@ class ReadingFragment : Fragment() {
             )
         }
     }
-
 
     private fun setupWordSelection(textView: android.widget.TextView) {
         textView.setTextIsSelectable(true)
