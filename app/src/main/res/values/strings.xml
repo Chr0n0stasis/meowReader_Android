@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">meowReader</string>
+    <string name="cloze_test_tab_1">1</string>
+    <string name="cloze_test_tab_2">2</string>
+    <string name="cloze_test_tab_3">3</string>
+    <string name="explanation_title">Analysis & Explanation</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>
