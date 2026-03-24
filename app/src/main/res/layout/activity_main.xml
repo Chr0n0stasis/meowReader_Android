@@ -66,44 +66,11 @@
                 <TextView 
                     android:layout_width="wrap_content" 
                     android:layout_height="wrap_content" 
-                    android:text="搜索对话" 
+                    android:text="搜索文章" 
                     android:layout_marginStart="12dp" 
                     android:textColor="?attr/colorOnSurfaceVariant" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginEnd="12dp"
-            android:gravity="center_vertical"
-            android:paddingStart="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?attr/selectableItemBackground">
-            <ImageView 
-                android:layout_width="24dp" 
-                android:layout_height="24dp" 
-                android:src="@drawable/ic_launcher" 
-                app:tint="?attr/colorOnSurfaceVariant" />
-            <TextView 
-                android:layout_width="wrap_content" 
-                android:layout_height="wrap_content" 
-                android:text="发起新对话" 
-                android:layout_marginStart="12dp" 
-                android:textAppearance="?attr/textAppearanceLabelLarge" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="28dp"
-            android:paddingTop="16dp"
-            android:paddingBottom="8dp"
-            android:text="对话"
-            android:textAppearance="?attr/textAppearanceLabelMedium"
-            android:textColor="?attr/colorPrimary" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/nav_recycler"
