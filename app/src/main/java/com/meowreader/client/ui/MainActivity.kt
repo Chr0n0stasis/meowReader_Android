@@ -31,11 +31,13 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.openDrawer(GravityCompat.START)
         }
 
-        (binding.bottomNavigation as com.google.android.material.bottomnavigation.BottomNavigationView).setOnItemSelectedListener { item ->
+        val bottomNav = binding.bottomNavigation as com.google.android.material.bottomnavigation.BottomNavigationView
+        bottomNav.setOnItemSelectedListener { item: android.view.MenuItem ->
             when(item.itemId) {
                 R.id.nav_reading -> switchFragment(ReadingFragment())
                 R.id.nav_analytics -> switchFragment(AnalyticsFragment())
                 R.id.nav_settings -> switchFragment(SettingsFragment())
+                else -> false
             }
             true
         }
