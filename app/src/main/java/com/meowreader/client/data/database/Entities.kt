@@ -60,3 +60,13 @@ data class SyncIndexEntity(
     val remotePath: String,
     val isDownloaded: Boolean = false
 )
+
+@Entity(tableName = "user_answers")
+data class UserAnswerEntity(
+    @PrimaryKey(autoGenerate = true) val id: Long = 0,
+    val paperId: String,
+    val qNumber: Int,
+    val selectedAnswer: String,
+    val isCorrect: Boolean,
+    val timestamp: Long
+)
