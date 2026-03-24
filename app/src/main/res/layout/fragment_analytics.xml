@@ -69,10 +69,11 @@
 
         <GridLayout
             android:id="@+id/archive_heatmap"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnCount="7"
-            android:rowCount="52"
+            android:layout_gravity="center_horizontal"
+            android:columnCount="52"
+            android:rowCount="7"
             android:useDefaultMargins="true" />
 
     </LinearLayout>

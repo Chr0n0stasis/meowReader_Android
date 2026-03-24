@@ -79,31 +79,85 @@ class ReadingFragment : Fragment() {
 
         options.forEachIndexed { index, button ->
             button.setOnClickListener {
-                // Instant Grading
                 val selectedAnswer = answers[index]
                 val isCorrect = selectedAnswer == question.answer
                 
-                // MD3 Visual Feedback
-                if (isCorrect) {
-                    button.setIconResource(R.drawable.ic_launcher) // Placeholder for check
-                    button.setIconTintResource(R.color.md_theme_light_primary)
-                    button.setTextColor(resources.getColor(R.color.md_theme_light_primary, null))
-                } else {
-                    button.setIconResource(android.R.drawable.ic_delete)
-                    button.setIconTintResource(android.R.color.holo_red_dark)
-                    button.setTextColor(Color.RED)
+                // Save to DB
+                viewLifecycleOwner.lifecycleScope.launch {
+                    val db = RoomDatabaseClient.getDatabase(requireContext())
+                    val paperId = question.paperId
+                    
+                    db.answerDao().insertAnswer(
+                        com.meowreader.client.domain.model.UserAnswerEntity(
+                            paperId = paperId,
+                            qNumber = question.qNumber,
+                            selectedAnswer = selectedAnswer,
+                            isCorrect = isCorrect,
+                            timestamp = System.currentTimeMillis()
+                        )
+                    )
+
+                    // Check for completion
+                    val allQuestions = viewModel.currentQuestions.first()
+                    val userAnswers = db.answerDao().getAnswersForPaper(paperId).first()
+                    
+                    if (userAnswers.size == allQuestions.size) {
+                        // Completed!
+                        val correctCount = userAnswers.count { it.isCorrect }
+                        val score = (correctCount.toDouble() / allQuestions.size * 100).toInt()
+                        val paper = viewModel.currentPaper.first()
+                        val rating = score * (paper?.difficultyConstant ?: 1.0)
+                        
+                        db.historyDao().updateHistory(
+                            com.meowreader.client.domain.model.HistoryEntity(
+                                paperId = paperId,
+                                lastQuestionNumber = question.qNumber,
+                                scrollPosition = 0,
+                                isCompleted = true,
+                                score = score,
+                                rating = rating,
+                                completionDate = System.currentTimeMillis()
+                            )
+                        )
+                    }
                 }
 
-                // Show Explanation
-                qBinding.explanationLayout.visibility = View.VISIBLE
-                markwon.setMarkdown(qBinding.explanationText, question.explanation)
-                
-                // Disable other buttons
-                options.forEach { it.isEnabled = false }
+                showGrading(qBinding, button, isCorrect, question.explanation, options)
+            }
+        }
+
+        // Restore state if already answered
+        viewLifecycleOwner.lifecycleScope.launch {
+            val db = RoomDatabaseClient.getDatabase(requireContext())
+            db.answerDao().getAnswersForPaper(question.paperId).collectLatest { savedAnswers ->
+                val saved = savedAnswers.find { it.qNumber == question.qNumber }
+                saved?.let {
+                    val optionIndex = when(it.selectedAnswer) {
+                        "A" -> 0; "B" -> 1; "C" -> 2; "D" -> 3; else -> -1
+                    }
+                    if (optionIndex != -1) {
+                        showGrading(qBinding, options[optionIndex], it.isCorrect, question.explanation, options)
+                    }
+                }
             }
         }
 
         binding.questionsContainer.addView(qBinding.root)
+    }
+
+    private fun showGrading(qBinding: ItemQuestionBinding, button: com.google.android.material.button.MaterialButton, isCorrect: Boolean, explanation: String, options: List<com.google.android.material.button.MaterialButton>) {
+        if (isCorrect) {
+            button.setIconResource(R.drawable.ic_launcher)
+            button.setIconTintResource(R.color.md_theme_light_primary)
+            button.setTextColor(resources.getColor(R.color.md_theme_light_primary, null))
+        } else {
+            button.setIconResource(android.R.drawable.ic_delete)
+            button.setIconTintResource(android.R.color.holo_red_dark)
+            button.setTextColor(Color.RED)
+        }
+        qBinding.explanationLayout.visibility = View.VISIBLE
+        markwon.setMarkdown(qBinding.explanationText, explanation)
+        options.forEach { it.isEnabled = false }
     }
 
     private fun setupWordSelection(textView: android.widget.TextView) {

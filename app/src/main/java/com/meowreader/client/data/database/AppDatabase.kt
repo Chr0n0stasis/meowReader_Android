@@ -48,12 +48,15 @@ interface SyncDao {
     @Query("UPDATE sync_index SET isDownloaded = 1 WHERE id = :id")
     suspend fun markAsDownloaded(id: String)
 
-    @Query("SELECT id FROM sync_index")
-    suspend fun getAllIndexedIds(): List<String>
+    @Query("SELECT * FROM user_answers WHERE paperId = :paperId")
+    fun getAnswersForPaper(paperId: String): Flow<List<UserAnswerEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertAnswer(answer: UserAnswerEntity)
 }
 
 @Database(
-    entities = [PaperEntity::class, QuestionEntity::class, HistoryEntity::class, VocabularyEntity::class, SyncIndexEntity::class],
+    entities = [PaperEntity::class, QuestionEntity::class, HistoryEntity::class, VocabularyEntity::class, SyncIndexEntity::class, UserAnswerEntity::class],
     version = 1,
     exportSchema = false
 )
@@ -61,4 +64,5 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun paperDao(): PaperDao
     abstract fun historyDao(): HistoryDao
     abstract fun syncDao(): SyncDao
+    abstract fun answerDao(): AnswerDao
 }

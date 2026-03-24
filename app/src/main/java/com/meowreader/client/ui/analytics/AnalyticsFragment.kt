@@ -37,14 +37,8 @@ class AnalyticsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.b35Rating.collectLatest { rating ->
-                binding.b35Text.text = "B35: ${"%.1f".format(rating)}"
-            }
-        }
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.b15RatingWeekly.collectLatest { rating ->
-                binding.b15Text.text = "B15: ${"%.1f".format(rating)}"
+            viewModel.totalRating.collectLatest { rating ->
+                binding.totalRatingText.text = "%.1f".format(rating)
             }
         }
 
@@ -57,17 +51,26 @@ class AnalyticsFragment : Fragment() {
 
     private fun renderHeatmap(dates: List<Long>) {
         binding.archiveHeatmap.removeAllViews()
-        // Simplified heatmap logic: 7x52 grid
-        for (i in 0 until 7 * 10) { // Just show 10 weeks for demo
-            val view = View(requireContext())
+        val context = requireContext()
+        val dayMillis = 24 * 60 * 60 * 1000L
+        val today = System.currentTimeMillis()
+        
+        // Show last 20 weeks (140 days)
+        for (i in 0 until 140) {
+            val dayTimestamp = today - (139 - i) * dayMillis
+            val hasActivity = dates.any { Math.abs(it - dayTimestamp) < dayMillis / 2 }
+            
+            val view = View(context)
             val params = GridLayout.LayoutParams()
-            params.width = 40
-            params.height = 40
+            params.width = 32
+            params.height = 32
             params.setMargins(4, 4, 4, 4)
+            // Row is day of week (i % 7), Column is week index (i / 7)
+            params.columnSpec = GridLayout.spec(i / 7)
+            params.rowSpec = GridLayout.spec(i % 7)
             view.layoutParams = params
             
-            // Random colors for aesthetics in demo
-            val color = if (dates.isNotEmpty()) "#4CAF50" else "#E0E0E0"
+            val color = if (hasActivity) "#66BB6A" else "#EEEEEE"
             view.setBackgroundColor(Color.parseColor(color))
             binding.archiveHeatmap.addView(view)
         }
