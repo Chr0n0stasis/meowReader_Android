@@ -20,8 +20,8 @@ class DictionaryBottomSheet : BottomSheetDialogFragment() {
         
         val word = arguments?.getString("word") ?: "Unknown"
         binding.wordText.text = word
-        binding.phonetic_text.text = "/ˈ.../" 
-        binding.definition_text.text = "Definition for $word in postgraduate syllabus..."
+        binding.phoneticText.text = "/ˈ.../" 
+        binding.definitionText.text = "Definition for $word in postgraduate syllabus..."
     }
 
     companion object {

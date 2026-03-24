@@ -109,14 +109,14 @@ class ReadingFragment : Fragment() {
             }
 
             override fun onPrepareActionMode(mode: android.view.ActionMode?, menu: android.view.Menu?): Boolean = false
-
-            override fun onActionItemClicked(mode: android.view.ActionMode?, item: android.view.Menu): Boolean {
-                if (item.title == "Lookup in meowReader") {
+            
+            override fun onActionItemClicked(mode: android.view.ActionMode?, item: android.view.MenuItem?): Boolean {
+                if (item?.title == "Lookup in meowReader") {
                     val start = textView.selectionStart
                     val end = textView.selectionEnd
                     val word = textView.text.substring(start, end).trim()
                     if (word.isNotEmpty()) {
-                        DictionaryBottomSheet.newInstance(word).show(parentFragmentManager, "dictionary")
+                        com.meowreader.client.ui.dictionary.DictionaryBottomSheet.newInstance(word).show(parentFragmentManager, "dictionary")
                     }
                     mode?.finish()
                     return true
@@ -147,12 +147,12 @@ class ReadingFragment : Fragment() {
     }
 
     private fun scrollToQuestion(qNumber: Int) {
-        // Logic to scroll binding.scroll_view to the specific question card
+        // Logic to scroll binding.scrollView to the specific question card
         for (i in 0 until binding.questionsContainer.childCount) {
             val view = binding.questionsContainer.getChildAt(i)
             // Assuming tag or order matches qNumber
             if (i + 1 == qNumber) {
-                binding.scroll_view.smoothScrollTo(0, view.top)
+                binding.scrollView.smoothScrollTo(0, view.top)
                 break
             }
         }

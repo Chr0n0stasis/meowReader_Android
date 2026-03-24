@@ -37,13 +37,13 @@ class AnalyticsFragment : Fragment() {
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.b35Rating.collectLatest { rating ->
-                binding.b35_text.text = "B35: ${"%.1f".format(rating)}"
+                binding.b35Text.text = "B35: ${"%.1f".format(rating)}"
             }
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.b15RatingWeekly.collectLatest { rating ->
-                binding.b15_text.text = "B15: ${"%.1f".format(rating)}"
+                binding.b15Text.text = "B15: ${"%.1f".format(rating)}"
             }
         }
 
